@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .container-primary {
+      @apply max-w-screen-xl mx-auto w-11/12;
+    }
+  }
