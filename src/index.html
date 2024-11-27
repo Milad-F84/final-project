@@ -20,7 +20,10 @@
         </div>
         <div class="container-primary">
             <div class="flex justify-between ">
-                <div class="flex items-center justify-start">
+                <div class="flex justify-start items-center cursor-pointer md:hidden">
+                    <i class="fa fa-bars" style="font-size:24px"></i>
+                </div>
+                <div class="flex items-center justify-center md:justify-start">
                     <div class="p-2">
                         <a href="#">
                             <img class="max-w-[198px] py-2 " src="./assets/imgs/logo.png" alt="">
@@ -29,14 +32,15 @@
                 </div>
                 <div class="hidden md:flex md:items-center">
                     <div class="flex-auto">
-                        <form action="#" role="search" method="get">
-                            <input class="roundded-[35px]" type="text" placeholder="جست و جو برای محصولات">
+                        <form action="#" role="search" method="get" class="w-full">
+                            <input class="py-3 px-5 mt-2 box-border border-solid border-red-700 border-2 rounded-3xl"
+                                type="text" placeholder="جست و جو برای محصولات">
                             <i class="fa-solid fa-magnifying-glass cursor-pointer hover:text-gray-400 md:text-lg"></i>
                         </form>
                     </div>
                 </div>
                 <div class="flex items-center justify-end gap-2">
-                    <div class="hover:text-gray-400">
+                    <div class="hover:text-gray-400 max-w-[110px] w-full">
                         <a class="flex justify-center items-center h-10 p-2" href="#">
                             <span>ورود / ثبت نام</span>
                         </a>
@@ -54,7 +58,7 @@
             </div>
         </div>
         <hr class="text-gray-400">
-        <div class="container-primary">
+        <div class="container-primary hidden md:block">
             <div class="flex justify-between ">
                 <div class="flex-1 flex items-center">
                     <nav class="flex-auto p-3">
@@ -140,7 +144,7 @@
         </div>
         <div class="bg-red-600 w-full h-0.5 mt-2"></div>
         <div class="container-primary">
-            <div class="flex justify-between">
+            <div class="md:flex md:justify-between">
                 <div class="flex">
                     <div class="flex p-3 w-full content-start flex-wrap">
                         <a class="inline-block " href="#">
@@ -172,7 +176,7 @@
             <div class="w-full h-0.5 bg-red-600"></div>
         </div>
         <!--limit products-->
-        <div id="main-page-products"  class="container-primary mt-8 md:flex md:gap-6 md:justify-center">
+        <div id="main-page-products" class="container-primary mt-8 md:flex md:gap-6 md:justify-center">
             <!--skeleton-->
             <div class="w-full flex items-center flex-col rounded-lg shadow-xl pb-4 overflow-hidden">
                 <div class="w-full aspect-square animate-pulse bg-slate-300"></div>
@@ -195,12 +199,9 @@
                 <div class="w-1/2 h-5 mt-4 animate-pulse bg-slate-300"></div>
             </div>
         </div>
-        <a
-        href="/products"
-        onclick="handleAClick(event)"
-        class="bg-red-600 text-white px-8 py-2 block mx-auto w-max mt-6 rounded-xl hover:bg-gray-400 hover:text-black"
-        >همه محصولات</a
-      >
+        <a href="/products" onclick="handleAClick(event)"
+            class="bg-red-600 text-white px-8 py-2 block mx-auto w-max mt-6 rounded-xl hover:bg-gray-400 hover:text-black">همه
+            محصولات</a>
     </main>
     <div class="bg-red-600 w-full h-0.5 mt-6"></div>
     <section class="container-primary">
