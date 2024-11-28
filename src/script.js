@@ -84,10 +84,11 @@ async function renderAllProductsPage() {
   root.innerHTML = container;
 
   const allProducts = await getAllProducts();
-  const template = allProducts.map((product)=>{
-    const { title, image, price, id } = product;
-    return`
-          <a href="/products/${id}"> 
+  const template = allProducts
+    .map((product) => {
+      const { title, image, price, id } = product;
+      return `
+      <a href="/products/${id}"> 
       <div
       class="flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden w-full">
       <img
@@ -99,39 +100,40 @@ async function renderAllProductsPage() {
   
       <h2 class="font-bold text-xl mt-4 text-center line-clamp-1">${title}</h2>
       <div class="flex gap-1 mt-4">
-        <span>${price}</span>
-        <span>تومان</span>
+        <span class="text-red-600">${price}</span>
+        <span>ریال</span>
       </div>
     </div>
     </a>
     `;
-  }).join("");
+    })
+    .join("");
 
-   container = `
-  <div id="all-products-page-products" class="container-primary mt-8 md:flex md:gap-6 md:justify-center">
+  container = `
+  <div id="all-products-page-products" class="container-primary mt-8 md:grid md:gap-6 md:grid-cols-4">
       ${template}
   </div>
   `;
   root.innerHTML = container;
-  }
+}
 
-  function handleAClick(event,element){
-    event.preventDefault();
-    const href = element.getAttribute("href");
-    history.pushState("" ,"" ,href);
-    checkState();
-  }
+function handleAClick(event, element) {
+  event.preventDefault();
+  const href = element.getAttribute("href");
+  history.pushState("", "", href);
+  checkState();
+}
 
-  function checkState(){
-    const pathName = location.pathname;
-    switch (true) {
-        case pathName === "/products":
-            renderAllProductsPage();
-            break;
-        default:
-            break;
-    }
+function checkState() {
+  const pathName = location.pathname;
+  switch (true) {
+    case pathName === "/products":
+      renderAllProductsPage();
+      break;
+    default:
+      break;
   }
+}
 
-  //EVENTS
-  window.addEventListener("popstate", checkState);
+//EVENTS
+window.addEventListener("popstate", checkState);
