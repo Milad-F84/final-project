@@ -14,6 +14,12 @@ async function getAllProducts() {
     .then((json) => json);
   return result;
 }
+async function getSingleProduct(id) {
+  const result = await fetch(`https://fakestoreapi.com/products/${id}`)
+  .then(res=>res.json())
+  .then(json=>json)
+  return result;
+}
 
 async function renderMainPageProducts() {
   const products = await getLimitedProducts(4);
@@ -88,7 +94,9 @@ async function renderAllProductsPage() {
     .map((product) => {
       const { title, image, price, id } = product;
       return `
-      <a href="/products/${id}"> 
+      <a
+      onclick="handleAClick(event , this)" 
+      href="/products/${id}"> 
       <div
       class="flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden w-full">
       <img
@@ -115,6 +123,37 @@ async function renderAllProductsPage() {
   </div>
   `;
   root.innerHTML = container;
+}
+
+async function renderSingleProduct(id) {
+  const data = await getSingleProduct(id);
+
+  const template = `
+  <div class="container-primary flex flex-col md:flex-row gap-4 shadow-lg">
+    <img src="${data.image}" alt="">
+    <div>
+        <div class="shadow-lg my-3">
+            <p class="p-2">${data.category}</p>
+        </div>
+        <h1>${data.title}</h1>
+        <h3>${data.price}</h3>
+        <div>
+            <a href="#"
+                class="border-solid border-2 rounded-lg bg-green-600 text-white py-1 px-5 text-sm text-center w-fit ">افزودن
+                به
+                سبد خرید</a>
+        </div>
+    </div>
+</div>
+<div class="flex flex-col justify-center items-center">
+    <div class="bg-slate-200 w-full h-0.5 mt-6"></div>
+    <h2 class="mt-2">توضیحات</h2>
+    <div class="bg-slate-200 w-full h-0.5 mt-2"></div>
+    <p class="mt-2">${data.description}</p>
+</div>
+  `;
+
+  root.innerHTML = template;
 }
 
 function renderMainPage(){
