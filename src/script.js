@@ -20,6 +20,12 @@ async function getSingleProduct(id) {
     .then((json) => json);
   return result;
 }
+async function getInCategory(catTitle = "jwelery") {
+  const result = await fetch(`https://fakestoreapi.com/products/category/${catTitle}`)
+  .then(res=>res.json())
+  .then(json=>json)
+  return result;
+}
 
 async function renderMainPageProducts() {
   const products = await getLimitedProducts(4);
@@ -108,7 +114,7 @@ async function renderAllProductsPage() {
   
       <h2 class="font-bold text-xl mt-4 text-center line-clamp-1">${title}</h2>
       <div class="flex gap-1 mt-4">
-        <span class="text-red-600">${price}</span>
+        <span class="text-red-600 font-bold">${price}</span>
         <span>ریال</span>
       </div>
     </div>
@@ -155,6 +161,79 @@ async function renderSingleProduct(id) {
   `;
 
   root.innerHTML = template;
+}
+
+async function renderProductsInCategory(catTitle) {
+  const skeleton = `
+  <div
+          class="w-full flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden"
+        >
+          <div class="w-full aspect-square bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+        </div>
+        <div
+          class="w-full flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden"
+        >
+          <div class="w-full aspect-square bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+        </div>
+        <div
+          class="w-full flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden"
+        >
+          <div class="w-full aspect-square bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+        </div>
+        <div
+          class="w-full flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden"
+        >
+          <div class="w-full aspect-square bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+          <div class="w-1/2 h-5 mt-4 bg-slate-300 animate-pulse"></div>
+        </div>
+
+  `;
+let container = `
+<div id="all-products-page-products" class="container-primary mt-8 md:flex md:gap-6 md:justify-center">
+    ${skeleton}
+</div>
+`;
+root.innerHTML = container;
+
+const products = await getInCategory(catTitle);
+const template = products.map((product) => {
+  const { title, image, price, id } = product;
+  return `
+  <a
+  onclick="handleAClick(event , this)" 
+  href="/products/${id}"> 
+  <div
+  class="flex flex-col items-center rounded-lg shadow-xl pb-4 overflow-hidden w-full">
+  <img
+    class="w-full aspect-square object-cover"
+    src="${image}"
+    width="400px"
+    alt=""
+  />
+
+  <h2 class="font-bold text-xl mt-4 text-center line-clamp-1">${title}</h2>
+  <div class="flex gap-1 mt-4">
+    <span class="text-red-600 font-bold">${price}</span>
+    <span>ریال</span>
+  </div>
+</div>
+</a>
+`;
+}).join("");
+
+container = `
+<div id="all-products-page-products" class="container-primary mt-8 md:grid md:gap-6 md:grid-cols-4">
+    ${template}
+</div>
+`;
+root.innerHTML = container;
 }
 
 function renderMainPage() {
@@ -276,6 +355,11 @@ function checkState() {
       const pId = path.at(-1);
       renderSingleProduct(pId);
       break;
+      case pathName.startsWith("/categories/"):
+        let path2 = pathName.split("/");
+        const catTitle = path2.at(-1);
+        renderProductsInCategory(catTitle);
+        break;
     default:
       break;
   }
