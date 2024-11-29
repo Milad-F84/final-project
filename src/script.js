@@ -16,8 +16,8 @@ async function getAllProducts() {
 }
 async function getSingleProduct(id) {
   const result = await fetch(`https://fakestoreapi.com/products/${id}`)
-  .then(res=>res.json())
-  .then(json=>json)
+    .then((res) => res.json())
+    .then((json) => json);
   return result;
 }
 
@@ -129,17 +129,18 @@ async function renderSingleProduct(id) {
   const data = await getSingleProduct(id);
 
   const template = `
-  <div class="container-primary flex flex-col md:flex-row gap-4 shadow-lg">
-    <img src="${data.image}" alt="">
-    <div>
+  <div class="container-primary flex flex-col md:flex-row gap-4 shadow-lg pb-4 overflow-hidden w-full">
+    <img class="w-full aspect-square object-cover md:w-[400px]" src="${data.image}" alt="" width="400px">
+    <div class="gap-4">
         <div class="shadow-lg my-3">
-            <p class="p-2">${data.category}</p>
+            <a href="#" class="p-2">${data.category}</a>
         </div>
-        <h1>${data.title}</h1>
-        <h3>${data.price}</h3>
+        <h1 class="font-bold text-xl mt-4 line-clamp-1">${data.title}</h1>
+        <span class="text-red-600 font-bold">${data.price}</span>
+        <span>ریال</span>
         <div>
             <a href="#"
-                class="border-solid border-2 rounded-lg bg-green-600 text-white py-1 px-5 text-sm text-center w-fit ">افزودن
+                class="border-solid border-2 rounded-lg bg-green-600 text-white py-1 px-5 text-sm text-center w-fit mt-2 flex justify-center">افزودن
                 به
                 سبد خرید</a>
         </div>
@@ -156,7 +157,7 @@ async function renderSingleProduct(id) {
   root.innerHTML = template;
 }
 
-function renderMainPage(){
+function renderMainPage() {
   root.innerHTML = `
   <img class="containe-primary" src="./assets/imgs/banner.2.jpg" alt="">
         <div class="bg-red-600 w-full h-0.5 mt-2"></div>
@@ -267,9 +268,14 @@ function checkState() {
     case pathName === "/products":
       renderAllProductsPage();
       break;
-      case pathName === "/src/index.html":
-        renderMainPage();
-        break;
+    case pathName === "/src/index.html":
+      renderMainPage();
+      break;
+    case pathName.startsWith("/products/"):
+      let path = pathName.split("/");
+      const pId = path.at(-1);
+      renderSingleProduct(pId);
+      break;
     default:
       break;
   }
