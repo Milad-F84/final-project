@@ -335,6 +335,7 @@ function renderMainPage() {
 }
 
 function handleAClick(event, element) {
+  debugger;
   event.preventDefault();
   const href = element.getAttribute("href");
   history.pushState("", "", href);

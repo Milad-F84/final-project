@@ -775,10 +775,6 @@ video {
   width: max-content;
 }
 
-.w-auto {
-  width: auto;
-}
-
 .max-w-\[110px\] {
   max-width: 110px;
 }
@@ -1130,10 +1126,6 @@ video {
 
   .md\:h-10 {
     height: 2.5rem;
-  }
-
-  .md\:w-auto {
-    width: auto;
   }
 
   .md\:w-\[400px\] {
