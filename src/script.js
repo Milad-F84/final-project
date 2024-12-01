@@ -1,6 +1,7 @@
 //DOM NUDES
 let mainPageProductsContainer = document.getElementById("main-page-products");
 const root = document.querySelector("main");
+const menu = document.getElementById("categories-container");
 
 //FUNCTIONS
 async function getLimitedProducts(limitCount = 4) {
@@ -22,6 +23,12 @@ async function getSingleProduct(id) {
 }
 async function getInCategory(catTitle = "jwelery") {
   const result = await fetch(`https://fakestoreapi.com/products/category/${catTitle}`)
+  .then(res=>res.json())
+  .then(json=>json)
+  return result;
+}
+async function getAllCategories() {
+  const result = await fetch('https://fakestoreapi.com/products/categories')
   .then(res=>res.json())
   .then(json=>json)
   return result;
@@ -139,7 +146,7 @@ async function renderSingleProduct(id) {
     <img class="w-full aspect-square object-cover md:w-[400px]" src="${data.image}" alt="" width="400px">
     <div class="gap-4">
         <div class="shadow-lg my-3">
-            <a href="#" class="p-2">${data.category}</a>
+            <a href="/categories/${data.category}" onclick="handleAClick(event,this)" class="p-2">${data.category}</a>
         </div>
         <h1 class="font-bold text-xl mt-4 line-clamp-1">${data.title}</h1>
         <span class="text-red-600 font-bold">${data.price}</span>
@@ -235,6 +242,25 @@ container = `
 `;
 root.innerHTML = container;
 }
+
+async function renderCategoriesInMenu() {
+  const allCategories = await getAllCategories();
+  const template = allCategories.map((cat) => {
+    return`
+    <li>
+    <a href="/categories/${cat}" class="text-red-600" onclick="handleAClick(event , this)">${cat}</a>
+    </li>
+    `;
+  }).join("");
+
+  const ui = `
+  <ul>
+  ${template}
+  </ul>
+  `;
+  menu.innerHTML = ui;
+}
+
 
 function renderMainPage() {
   root.innerHTML = `
@@ -335,7 +361,6 @@ function renderMainPage() {
 }
 
 function handleAClick(event, element) {
-  debugger;
   event.preventDefault();
   const href = element.getAttribute("href");
   history.pushState("", "", href);
