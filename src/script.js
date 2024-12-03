@@ -300,21 +300,21 @@ function renderMainPage() {
             <div class="md:flex md:justify-between">
                 <div class="flex">
                     <div class="flex p-3 w-full content-start flex-wrap">
-                        <a class="inline-block " href="#">
+                        <a class="inline-block " onclick="handleAClick(event, this)" href="/categories/men's clothing">
                             <img class="inline-block h-auto max-w-full" src="./assets/imgs/mens-cloths.webp" alt="">
                         </a>
                     </div>
                 </div>
                 <div class="flex">
                     <div class="flex p-3 w-full content-center flex-wrap">
-                        <a class="inline-block " href="#">
+                        <a class="inline-block " onclick="handleAClick(event, this)" href="/categories/women's clothing">
                             <img class="inline-block h-auto max-w-full" src="./assets/imgs/womens-cloths.webp" alt="">
                         </a>
                     </div>
                 </div>
                 <div class="flex">
                     <div class="flex p-3 w-full content-end flex-wrap">
-                        <a class="inline-block " href="#">
+                        <a class="inline-block " onclick="handleAClick(event, this)" href="/categories/jewelery">
                             <img class="inline-block h-auto max-w-full" src="./assets/imgs/accesory.webp" alt="">
                         </a>
                     </div>
